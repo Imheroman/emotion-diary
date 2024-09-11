@@ -1,7 +1,7 @@
 import "./App.css";
 
-import {useReducer, useRef, createContext} from "react";
-import {Routes, Route, useNavigate} from "react-router-dom";
+import { useReducer, useRef, createContext } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 
 import Home from "./pages/Home";
 import Diary from "./pages/Diary";
@@ -9,7 +9,7 @@ import New from "./pages/New";
 import Editor from "./pages/Editor.jsx";
 import NotFound from "./pages/NotFound";
 
-import {getEmotionImage} from "./util/get-emotion-image.js";
+import { getEmotionImage } from "./util/get-emotion-image.js";
 
 import Button from "./components/Button.jsx";
 import Header from "./components/Header.jsx";
@@ -38,7 +38,7 @@ const mockData = [
     createdDate: new Date("2024-10-11").getTime(),
     emotionId: 4,
     content: "4번 일기 내용",
-  }
+  },
 ];
 
 function reducer(state, action) {
@@ -47,15 +47,13 @@ function reducer(state, action) {
       return [action.data, ...state];
     case "UPDATE":
       return state.map((item) =>
-          String(item.id) === String(action.data.id) ?
-              action.data : item
+        String(item.id) === String(action.data.id) ? action.data : item
       );
     case "DELETE":
       return state.filter((item) => String(item.id) !== String(action.id));
     default:
       return state;
   }
-
 }
 
 export const DiaryStateContext = createContext();
@@ -73,7 +71,7 @@ function App() {
         id: idRef.current++,
         createdDate: createdDate,
         emotionId: emotionId,
-        content: content
+        content: content,
       },
     });
   };
@@ -88,41 +86,40 @@ function App() {
         content,
       },
     });
-  }
+  };
 
   const onDelete = (id) => {
     dispatch({
       type: "DELETE",
       id,
     });
-  }
+  };
 
   // 일기 수정
 
   // 일기 삭제
 
   return (
-      <>
-        <DiaryStateContext.Provider value={data}>
-          <DiaryDispatchContext.Provider value={
-            {
-              onCreate,
-              onUpdate,
-              onDelete,
-            }
-          }>
+    <>
+      <DiaryStateContext.Provider value={data}>
+        <DiaryDispatchContext.Provider
+          value={{
+            onCreate,
+            onUpdate,
+            onDelete,
+          }}
+        >
           <Routes>
-            <Route path="/" element={<Home/>}></Route>
-            <Route path="/new" element={<New/>}></Route>
-            <Route path="/diary/:id" element={<Diary/>}></Route>
-            <Route path="/edit/:id" element={<Editor/>}></Route>
-            <Route path="*" element={<NotFound/>}></Route>{" "}
+            <Route path="/" element={<Home />}></Route>
+            <Route path="/new" element={<New />}></Route>
+            <Route path="/diary/:id" element={<Diary />}></Route>
+            <Route path="/edit/:id" element={<Editor />}></Route>
+            <Route path="*" element={<NotFound />}></Route>{" "}
           </Routes>
-          </DiaryDispatchContext.Provider>
-        </DiaryStateContext.Provider>
-      </>
-  )
-      ;
+        </DiaryDispatchContext.Provider>
+      </DiaryStateContext.Provider>
+    </>
+  );
 }
 
 export default App;

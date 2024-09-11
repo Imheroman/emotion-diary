@@ -1,6 +1,7 @@
 import "./Editor.css";
 
 import EmotionItem from "./EmotionItem";
+import Button from "../components/Button.jsx";
 
 const emotionList = [
   {
@@ -45,8 +46,14 @@ const Editor = () => {
                 />)}
           </div>
         </section>
-        <section className="content_section"></section>
-        <section className="button_section"></section>
+        <section className="content_section">
+          <h4>오늘의 일기</h4>
+          <textarea placeholder="How were you today?"/>
+        </section>
+        <section className="button_section">
+          <Button text={"취소하기"}/>
+          <Button text={"작성 완료"} type={"POSITIVE"}/>
+        </section>
       </div>
   );
 };
